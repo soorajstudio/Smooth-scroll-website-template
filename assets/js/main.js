@@ -257,11 +257,11 @@
             gsap.to('#carousel', {
                 scrollTrigger: {
                     trigger: '#carousel',
-                    start: 'top center',
-                    end: 'bottom center',
-                    scrub: 1.9
+                    start: 'bottom 20%',
+                    end: 'bottom top',
+                    scrub: 1
                 },
-                y: 120,
+                y: 40,
                 opacity: 0
             });
         }
