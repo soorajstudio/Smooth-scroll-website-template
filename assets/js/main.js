@@ -345,7 +345,81 @@
             });
         }
 
-        // --- F. DESKTOP SECTION SCROLL REVEAL ---
+        // --- F. CLOUD 3D CONTAINER SCROLL ANIMATION ---
+        const cloudContainer = document.getElementById('cloud-container');
+        const cloudCard = document.getElementById('cloud-card-wrapper');
+        const cloudTitle = document.getElementById('cloud-title-container');
+
+        if (cloudContainer && cloudCard) {
+            let mm = gsap.matchMedia();
+
+            // Desktop / Tablet (>768px): 3D Perspective Tilt & Vertical Title Parallax
+            mm.add("(min-width: 769px)", () => {
+                gsap.set(cloudCard, {
+                    transformOrigin: 'top center',
+                    transformPerspective: 1000,
+                    rotateX: 25,
+                    scale: 1.05
+                });
+
+                // Scrub card tilt from 25deg -> -15deg and scale from 1.05 -> 1.0
+                gsap.to(cloudCard, {
+                    scrollTrigger: {
+                        trigger: cloudContainer,
+                        start: 'top 70%',
+                        end: 'bottom 40%',
+                        scrub: 1
+                    },
+                    rotateX: -15,
+                    scale: 1.0,
+                    ease: 'none'
+                });
+
+                if (cloudTitle) {
+                    // Title component elevates upward as user scrolls
+                    gsap.to(cloudTitle, {
+                        scrollTrigger: {
+                            trigger: cloudContainer,
+                            start: 'top 70%',
+                            end: 'bottom 40%',
+                            scrub: 1
+                        },
+                        y: -100,
+                        ease: 'none'
+                    });
+                }
+            });
+
+            // Mobile (<=768px): Flat orientation, responsive scale
+            mm.add("(max-width: 768px)", () => {
+                gsap.set(cloudCard, {
+                    transformOrigin: 'top center',
+                    rotateX: 0,
+                    scale: 1
+                });
+                if (cloudTitle) {
+                    gsap.set(cloudTitle, { y: 0 });
+                }
+            });
+        }
+
+        // Cloud Features Grid Scroll Reveal
+        const cloudFeatures = document.getElementById('cloud-features-grid');
+        if (cloudFeatures) {
+            gsap.from('#cloud-features-grid > div', {
+                scrollTrigger: {
+                    trigger: cloudFeatures,
+                    start: 'top 85%',
+                    end: 'top 50%',
+                    scrub: 1
+                },
+                stagger: 0.1,
+                opacity: 0,
+                y: 50
+            });
+        }
+
+        // --- G. DESKTOP SECTION SCROLL REVEAL ---
         const desktopSection = document.getElementById('upscayl-desktop-section');
         if (desktopSection) {
             gsap.from('#upscayl-desktop-section #heading h1, #upscayl-desktop-section #subheading p', {
@@ -373,7 +447,7 @@
             });
         }
 
-        // --- G. RUNNING TEXT DIVIDER SCRUB ---
+        // --- H. RUNNING TEXT DIVIDER SCRUB ---
         const runningTracks = gsap.utils.toArray('.running-text');
         runningTracks.forEach((track) => {
             gsap.to(track, {
@@ -387,7 +461,7 @@
             });
         });
 
-        // --- H. BOTTOM CTA SECTION STAGGER REVEAL ---
+        // --- I. BOTTOM CTA SECTION STAGGER REVEAL ---
         const bottomCta = document.querySelector('.bottom-cta-container') || document.getElementById('text-1')?.closest('div');
         if (bottomCta) {
             gsap.from('#text-1, #text-2, #text-3, #button', {
