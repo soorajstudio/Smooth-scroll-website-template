@@ -78,6 +78,17 @@
         const loaderTitle = document.querySelector('.loader-title');
         const growCircle = document.querySelector('.grow-circle');
 
+        // Prime initial hero states immediately before any loader animation to prevent FOUC
+        gsap.set('#glow', { opacity: 0 });
+        gsap.set('#circle', { opacity: 0, scale: 0 });
+        gsap.set('#title', { opacity: 0, y: 50 });
+        gsap.set('#subtitle', { opacity: 0, x: -50 });
+        gsap.set('#cta', { opacity: 0, x: 50 });
+        gsap.set('#slider', { opacity: 0, y: 50 });
+        gsap.set('#carousel', { opacity: 0, y: 50 });
+
+        let heroIntroPlayed = false;
+
         function cleanupLoader() {
             if (loader) {
                 loader.style.pointerEvents = 'none';
@@ -128,7 +139,10 @@
                     duration: 0.6,
                     opacity: 0,
                     filter: 'blur(12px)',
-                    ease: 'power4.inOut'
+                    ease: 'power4.inOut',
+                    onStart: function () {
+                        playHeroIntro();
+                    }
                 }, '-=0.3');
         } else {
             playHeroIntro();
@@ -136,16 +150,10 @@
 
         // --- B. HERO INTRO ANIMATION ---
         function playHeroIntro() {
-            const heroTl = gsap.timeline();
+            if (heroIntroPlayed) return;
+            heroIntroPlayed = true;
 
-            // Set initial hero states
-            gsap.set('#glow', { opacity: 0 });
-            gsap.set('#circle', { opacity: 0, scale: 0 });
-            gsap.set('#title', { opacity: 0, y: 50 });
-            gsap.set('#subtitle', { opacity: 0, x: -50 });
-            gsap.set('#cta', { opacity: 0, x: 50 });
-            gsap.set('#slider', { opacity: 0, y: 50 });
-            gsap.set('#carousel', { opacity: 0, y: 50 });
+            const heroTl = gsap.timeline();
 
             heroTl
                 .to('#glow', {
