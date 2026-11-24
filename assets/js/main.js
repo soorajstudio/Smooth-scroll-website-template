@@ -1,18 +1,395 @@
 /**
- * Smooth Website Template - Main Interactive Controller
- * Features:
- *  1. Interactive Before / After Image Comparison Slider
- *  2. "Made For" Rotating Text Animation
- *  3. Responsive Slide-Out Mobile Navigation Drawer
- *  4. Dynamic Navbar Scroll Shrink & Blur Effect
- *  5. Smooth In-Page Anchor Scrolling
+ * Smooth Website Template - Master Interactive & Animation Controller
+ * Powered by GSAP, ScrollTrigger, and Lenis Smooth Scroll
  */
 
 (function () {
     'use strict';
 
+    // Wait until DOM and libraries are fully loaded
+    function init() {
+        initLenis();
+        initComparisonSlider();
+        initMobileMenu();
+        initNavbarScroll();
+        initAnimations();
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', init);
+    } else {
+        init();
+    }
+
     // ----------------------------------------------------
-    // 1. IMAGE COMPARISON SLIDER
+    // 1. LENIS SMOOTH INERTIAL SCROLLING
+    // ----------------------------------------------------
+    let lenis = null;
+    function initLenis() {
+        if (typeof Lenis === 'undefined') return;
+
+        try {
+            lenis = new Lenis({
+                duration: 1.2,
+                easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+                orientation: 'vertical',
+                gestureOrientation: 'vertical',
+                smoothWheel: true,
+                wheelMultiplier: 1,
+                touchMultiplier: 1.5,
+                infinite: false
+            });
+
+            // Synchronize Lenis with GSAP ScrollTrigger
+            if (typeof ScrollTrigger !== 'undefined') {
+                lenis.on('scroll', ScrollTrigger.update);
+                gsap.ticker.add((time) => {
+                    lenis.raf(time * 1000);
+                });
+                gsap.ticker.lagSmoothing(0);
+            } else {
+                function raf(time) {
+                    lenis.raf(time);
+                    requestAnimationFrame(raf);
+                }
+                requestAnimationFrame(raf);
+            }
+        } catch (e) {
+            console.warn("Lenis initialization skipped:", e);
+        }
+    }
+
+    // ----------------------------------------------------
+    // 2. GSAP SCROLL & INTRO ANIMATIONS
+    // ----------------------------------------------------
+    function initAnimations() {
+        if (typeof gsap === 'undefined') return;
+
+        if (typeof ScrollTrigger !== 'undefined') {
+            gsap.registerPlugin(ScrollTrigger);
+        }
+
+        // --- A. INTRO PRELOADER ANIMATION ---
+        const loader = document.getElementById('loader');
+        const loaderTitle = document.querySelector('.loader-title');
+        const growCircle = document.querySelector('.grow-circle');
+
+        if (loader && loaderTitle && growCircle) {
+            const preloaderTl = gsap.timeline();
+
+            preloaderTl
+                .to(loaderTitle, {
+                    duration: 1.2,
+                    opacity: 1,
+                    y: 0,
+                    filter: 'blur(0px)',
+                    ease: 'power4.out',
+                    delay: 0.2
+                })
+                .to(growCircle, {
+                    duration: 1.5,
+                    scale: 6,
+                    ease: 'power2.inOut'
+                }, '+=0.2')
+                .to(loaderTitle, {
+                    duration: 0.8,
+                    opacity: 0,
+                    y: -50,
+                    filter: 'blur(10px)',
+                    ease: 'power4.inOut'
+                }, '<')
+                .to(loader, {
+                    duration: 1.0,
+                    opacity: 0,
+                    filter: 'blur(12px)',
+                    ease: 'power4.inOut',
+                    onComplete: function () {
+                        loader.style.display = 'none';
+                        playHeroIntro();
+                    }
+                }, '-=0.5');
+        } else {
+            playHeroIntro();
+        }
+
+        // --- B. HERO INTRO ANIMATION ---
+        function playHeroIntro() {
+            const heroTl = gsap.timeline();
+
+            // Set initial hero states
+            gsap.set('#glow', { opacity: 0 });
+            gsap.set('#circle', { opacity: 0, scale: 0 });
+            gsap.set('#title', { opacity: 0, y: 50 });
+            gsap.set('#subtitle', { opacity: 0, x: -50 });
+            gsap.set('#cta', { opacity: 0, x: 50 });
+            gsap.set('#slider', { opacity: 0, y: 50 });
+            gsap.set('#carousel', { opacity: 0, y: 50 });
+
+            heroTl
+                .to('#glow', {
+                    duration: 1.5,
+                    opacity: 1,
+                    ease: 'power4.inOut'
+                })
+                .to('#circle', {
+                    duration: 1.2,
+                    opacity: 1,
+                    scale: 1,
+                    ease: 'back.out(1.4)'
+                }, '-=0.8')
+                .to('#title', {
+                    duration: 1.0,
+                    opacity: 1,
+                    y: 0,
+                    ease: 'power3.out'
+                }, '-=0.6')
+                .to('#subtitle', {
+                    duration: 0.8,
+                    opacity: 1,
+                    x: 0,
+                    ease: 'power3.out'
+                }, '-=0.6')
+                .to('#cta', {
+                    duration: 0.8,
+                    opacity: 1,
+                    x: 0,
+                    ease: 'power3.out'
+                }, '-=0.6')
+                .to('#slider', {
+                    duration: 1.0,
+                    opacity: 1,
+                    y: 0,
+                    ease: 'power3.out'
+                }, '-=0.5')
+                .to('#carousel', {
+                    duration: 1.0,
+                    opacity: 1,
+                    y: 0,
+                    ease: 'power3.out',
+                    onComplete: function () {
+                        if (typeof ScrollTrigger !== 'undefined') {
+                            ScrollTrigger.refresh();
+                        }
+                    }
+                }, '-=0.6');
+        }
+
+        if (typeof ScrollTrigger === 'undefined') return;
+
+        // --- C. HERO SCROLL PARALLAX (Scrub) ---
+        const heroSection = document.querySelector('section');
+        if (heroSection) {
+            gsap.to('#title', {
+                scrollTrigger: {
+                    trigger: heroSection,
+                    start: 'top top',
+                    end: 'bottom top',
+                    scrub: 1.9
+                },
+                yPercent: -120
+            });
+
+            gsap.to('#subtitle', {
+                scrollTrigger: {
+                    trigger: heroSection,
+                    start: 'top top',
+                    end: 'bottom top',
+                    scrub: 1.2
+                },
+                scale: 1.15,
+                opacity: 0,
+                yPercent: -80
+            });
+
+            gsap.to('#cta', {
+                scrollTrigger: {
+                    trigger: heroSection,
+                    start: 'top top',
+                    end: 'bottom top',
+                    scrub: 1.2
+                },
+                y: 150,
+                opacity: 0
+            });
+
+            gsap.to('#slider', {
+                scrollTrigger: {
+                    trigger: heroSection,
+                    start: 'top top',
+                    end: 'bottom top',
+                    scrub: 1.9
+                },
+                scale: 1.12
+            });
+
+            gsap.to('#circle', {
+                scrollTrigger: {
+                    trigger: heroSection,
+                    start: 'top top',
+                    end: 'bottom top',
+                    scrub: 1.9
+                },
+                scale: 0.5
+            });
+
+            gsap.to('#carousel', {
+                scrollTrigger: {
+                    trigger: '#carousel',
+                    start: 'top center',
+                    end: 'bottom center',
+                    scrub: 1.9
+                },
+                y: 120,
+                opacity: 0
+            });
+        }
+
+        // --- D. INFORMATION SECTION SCROLL REVEAL ---
+        const infoSection = document.getElementById('information-section');
+        if (infoSection) {
+            gsap.from('#information-section #heading h1, #information-section #subheading p', {
+                scrollTrigger: {
+                    trigger: '#information-section #header',
+                    start: 'top 85%',
+                    end: 'bottom 80%',
+                    scrub: 1.1
+                },
+                stagger: 0.3,
+                scaleY: 1.1,
+                opacity: 0,
+                y: '80px'
+            });
+
+            gsap.from('#card-1, #card-2, #card-3', {
+                scrollTrigger: {
+                    trigger: '#cards',
+                    start: 'top 75%',
+                    end: 'top+=400 center',
+                    scrub: 1.2
+                },
+                stagger: 0.25,
+                opacity: 0,
+                y: '100px'
+            });
+        }
+
+        // --- E. "MADE FOR" PINNED SCRUB ANIMATION ---
+        const madeForSection = document.getElementById('made-for-section');
+        const textContainer = document.getElementById('text-container');
+        const words = gsap.utils.toArray('.made-word');
+
+        if (madeForSection && textContainer && words.length > 0) {
+            // Pinned scroll section
+            ScrollTrigger.create({
+                trigger: madeForSection,
+                start: 'top top',
+                end: 'bottom bottom',
+                pin: textContainer,
+                pinSpacing: false
+            });
+
+            // Master timeline scrubbed across section scroll
+            const wordsTl = gsap.timeline({
+                scrollTrigger: {
+                    trigger: madeForSection,
+                    start: 'top top',
+                    end: 'bottom bottom',
+                    scrub: 1
+                }
+            });
+
+            words.forEach((word, index) => {
+                // Initial state
+                gsap.set(word, { opacity: index === 0 ? 1 : 0, y: index === 0 ? 0 : 60 });
+
+                if (index > 0) {
+                    wordsTl.to(word, {
+                        opacity: 1,
+                        y: 0,
+                        duration: 1,
+                        ease: 'power2.out'
+                    });
+                }
+
+                wordsTl.to(word, { duration: 1.5 }); // Hold
+
+                if (index < words.length - 1) {
+                    wordsTl.to(word, {
+                        opacity: 0,
+                        y: -60,
+                        duration: 1,
+                        ease: 'power2.in'
+                    });
+                }
+            });
+        }
+
+        // --- F. DESKTOP SECTION SCROLL REVEAL ---
+        const desktopSection = document.getElementById('upscayl-desktop-section');
+        if (desktopSection) {
+            gsap.from('#upscayl-desktop-section #heading h1, #upscayl-desktop-section #subheading p', {
+                scrollTrigger: {
+                    trigger: desktopSection,
+                    start: 'top 80%',
+                    end: 'top+=250 center',
+                    scrub: 1.1
+                },
+                stagger: 0.2,
+                opacity: 0,
+                y: '80px'
+            });
+
+            gsap.from('#showcase-image', {
+                scrollTrigger: {
+                    trigger: desktopSection,
+                    start: 'top 70%',
+                    end: 'top+=500 center',
+                    scrub: 1.1
+                },
+                scale: 0.9,
+                opacity: 0,
+                y: '100px'
+            });
+        }
+
+        // --- G. RUNNING TEXT DIVIDER SCRUB ---
+        const runningTracks = gsap.utils.toArray('.running-text');
+        runningTracks.forEach((track) => {
+            gsap.to(track, {
+                scrollTrigger: {
+                    trigger: track,
+                    start: 'top bottom',
+                    end: 'bottom top',
+                    scrub: 3
+                },
+                x: '-20%'
+            });
+        });
+
+        // --- H. BOTTOM CTA SECTION STAGGER REVEAL ---
+        const bottomCta = document.querySelector('.bottom-cta-container') || document.getElementById('text-1')?.closest('div');
+        if (bottomCta) {
+            gsap.from('#text-1, #text-2, #text-3, #button', {
+                scrollTrigger: {
+                    trigger: bottomCta,
+                    start: 'top 85%',
+                    end: 'bottom 75%',
+                    scrub: 1.1
+                },
+                stagger: 0.2,
+                opacity: 0,
+                y: '60px'
+            });
+        }
+
+        // Refresh triggers on resize
+        window.addEventListener('resize', () => {
+            ScrollTrigger.refresh();
+        });
+    }
+
+    // ----------------------------------------------------
+    // 3. IMAGE COMPARISON SLIDER
     // ----------------------------------------------------
     function initComparisonSlider() {
         const sliderContainer = document.querySelector('[data-rcs="root"]');
@@ -76,31 +453,7 @@
     }
 
     // ----------------------------------------------------
-    // 2. "MADE FOR" ROTATING TEXT ANIMATION
-    // ----------------------------------------------------
-    function initWordRotator() {
-        const words = document.querySelectorAll('.made-for-word');
-        if (words.length === 0) return;
-
-        let currentIndex = 0;
-        setInterval(function () {
-            const currentWord = words[currentIndex];
-            currentWord.classList.remove('active');
-            currentWord.classList.add('exit');
-
-            currentIndex = (currentIndex + 1) % words.length;
-            const nextWord = words[currentIndex];
-            nextWord.classList.remove('exit');
-            nextWord.classList.add('active');
-
-            setTimeout(function () {
-                currentWord.classList.remove('exit');
-            }, 600);
-        }, 2500);
-    }
-
-    // ----------------------------------------------------
-    // 3. RESPONSIVE MOBILE MENU DRAWER
+    // 4. RESPONSIVE MOBILE MENU DRAWER
     // ----------------------------------------------------
     function initMobileMenu() {
         const menuBtn = document.getElementById('mobile-menu-btn');
@@ -120,6 +473,7 @@
             }, 10);
             if (menuBtn) menuBtn.setAttribute('aria-expanded', 'true');
             document.body.style.overflow = 'hidden';
+            if (lenis) lenis.stop();
         }
 
         function closeDrawer() {
@@ -133,6 +487,7 @@
             }, 300);
             if (menuBtn) menuBtn.setAttribute('aria-expanded', 'false');
             document.body.style.overflow = '';
+            if (lenis) lenis.start();
         }
 
         if (menuBtn) {
@@ -150,14 +505,26 @@
         });
 
         mobileLinks.forEach(function (link) {
-            link.addEventListener('click', function () {
+            link.addEventListener('click', function (e) {
+                const targetId = this.getAttribute('href');
                 closeDrawer();
+                if (targetId && targetId.startsWith('#') && targetId.length > 1) {
+                    e.preventDefault();
+                    const targetEl = document.querySelector(targetId);
+                    if (targetEl) {
+                        if (lenis) {
+                            lenis.scrollTo(targetEl, { offset: -60, duration: 1.2 });
+                        } else {
+                            targetEl.scrollIntoView({ behavior: 'smooth' });
+                        }
+                    }
+                }
             });
         });
     }
 
     // ----------------------------------------------------
-    // 4. NAVBAR SCROLL EFFECT
+    // 5. NAVBAR SCROLL EFFECT
     // ----------------------------------------------------
     function initNavbarScroll() {
         const navbar = document.getElementById('navbar');
@@ -175,19 +542,30 @@
 
         window.addEventListener('scroll', onScroll);
         onScroll();
-    }
 
-    // Initialize all modules when DOM is ready
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', initAll);
-    } else {
-        initAll();
-    }
-
-    function initAll() {
-        initComparisonSlider();
-        initWordRotator();
-        initMobileMenu();
-        initNavbarScroll();
+        // In-page smooth scrolling for desktop navbar links
+        document.querySelectorAll('#navbar a[href^="#"]').forEach((anchor) => {
+            anchor.addEventListener('click', function (e) {
+                const targetId = this.getAttribute('href');
+                if (targetId && targetId !== '#') {
+                    const targetEl = document.querySelector(targetId);
+                    if (targetEl) {
+                        e.preventDefault();
+                        if (lenis) {
+                            lenis.scrollTo(targetEl, { offset: -60, duration: 1.2 });
+                        } else {
+                            targetEl.scrollIntoView({ behavior: 'smooth' });
+                        }
+                    }
+                } else if (targetId === '#') {
+                    e.preventDefault();
+                    if (lenis) {
+                        lenis.scrollTo(0, { duration: 1.2 });
+                    } else {
+                        window.scrollTo({ top: 0, behavior: 'smooth' });
+                    }
+                }
+            });
+        });
     }
 })();
