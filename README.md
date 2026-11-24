@@ -1,17 +1,72 @@
-# Aiyooo - Next-Gen Digital Studio & AI Powerhouse
+# 🌶️ Aiyooo - Next-Gen Digital Studio Website
 
-A high-performance, modern, and responsive digital studio landing page template powered by **GSAP**, **ScrollTrigger**, and **Lenis** smooth inertial scrolling.
+<div align="center">
+
+[![GSAP](https://img.shields.io/badge/GSAP-3.12-88CE02?style=flat-square&logo=greensock&logoColor=white)](https://greensock.com/gsap/)
+[![Lenis](https://img.shields.io/badge/Lenis-Smooth_Scroll-black?style=flat-square)](https://lenis.darkroom.engineering/)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind-CSS-38B2AC?style=flat-square&logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
+[![JavaScript](https://img.shields.io/badge/JavaScript-ES6+-F7DF1E?style=flat-square&logo=javascript&logoColor=black)](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue?style=flat-square)](LICENSE)
+
+An ultra-modern, high-performance digital studio website template engineered with **GSAP 3D scroll perspective**, **interactive before/after image slider**, **Lenis inertial smooth scrolling**, and a bespoke **midnight indigo glassmorphic UI**.
+
+<br/>
+
+<img src="./docs/screenshots/hero-showcase.png" alt="Aiyooo Studio Website Preview" width="100%" />
+
+</div>
+
+---
+
+## 📸 Previews
+
+| Hero Showcase & Comparison Slider | Bespoke Craft & Services Grid |
+| :---: | :---: |
+| <img src="./docs/screenshots/hero-showcase.png" width="100%" /> | <img src="./docs/screenshots/services-grid.png" width="100%" /> |
+| **Interactive Before / After Slider** | **Sticky Staggered Card Reveal** |
+
+| 3D Studio Showcase | Midnight Glassmorphic Contact |
+| :---: | :---: |
+| <img src="./docs/screenshots/3d-studio.png" width="100%" /> | <img src="./docs/screenshots/contact-section.png" width="100%" /> |
+| **3D Scroll Perspective Tilt** | **Responsive Project Dispatcher** |
+
+---
 
 ## ✨ Features
 
-- **Lenis Smooth Inertial Scrolling**: Buttery-smooth normalized scrolling synchronized with GSAP ScrollTrigger.
-- **Interactive Before / After Image Comparison Slider**: Drag-to-compare with pointer, mouse, touch, and keyboard accessibility.
-- **GSAP 3D Scroll Perspective Animations**: Dynamic 3D container tilt, parallax elevation, and scrub transitions.
-- **Dual Animated Running Text Marquees**: Full-width uppercase running marquee dividers with bullet spacers and scrub effects.
-- **Media Partner Logo Marquee**: Infinite horizontally scrolling partner logos banner.
-- **Modern Midnight Indigo Glassmorphic Contact Section**: Fully styled responsive contact form with glowing indigo borders, form validation, and feedback state.
-- **Floating Pill Navigation**: Centered navigation menu with rounded pill styling that adapts on scroll, plus a responsive mobile drawer menu.
-- **Dark Modern Cyber Aesthetic**: Built with Tailwind CSS, backdrop blurs, and radial gradients.
+- ⚡ **Lenis Inertial Smooth Scrolling**: Buttery-smooth, normalized momentum scrolling synchronized directly with GSAP ScrollTrigger.
+- 🎚️ **Interactive Comparison Slider**: Draggable split-screen slider with mouse, touch drag, pointer tracking, and keyboard accessibility.
+- 🪐 **GSAP 3D Scroll Perspective**: Dynamic 3D container tilt (`rotateX: 25deg -> -15deg`) and vertical card elevation scrubbed to scroll position.
+- 🌀 **Dual Running Text Marquees**: High-impact, full-width running text dividers featuring bullet spacers and directional velocity scrub.
+- 🤝 **Infinite Partner Logo Marquee**: Smooth continuously looping press & partner banner with hover-pause behavior.
+- 📩 **Midnight Indigo Glassmorphic Contact Hub**: Custom-themed contact form with glowing indigo focus states, interactive validation, and instant dispatch feedback.
+- 🧭 **Centered Floating Pill Navbar**: Blur-enhanced glass navigation centered across the viewport with Lenis in-page smooth gliding.
+- 📱 **Adaptive Mobile Drawer**: Slide-out responsive mobile navigation with gesture backdrop and quick-action links.
+- 🚀 **Zero Build Step Required**: Clean standalone HTML, CSS, and modular JavaScript runnable straight in any browser.
+
+---
+
+## 🎮 Controls & Interactions
+
+| Action | Control / Gesture |
+| :--- | :--- |
+| **Smooth Navigation** | Mouse wheel or trackpad up / down |
+| **Compare Visuals** | Drag slider handle horizontally or use **`Left / Right`** arrows |
+| **Quick Jump to Section** | Click **`Home`**, **`Services`**, **`AI Studio`**, or **`Contact`** in the floating navbar |
+| **Fast Dispatch** | Click **`Start a Project`** in the hero to glide down to the contact card |
+| **Mobile Navigation** | Tap hamburger button on mobile to toggle slide-out drawer menu |
+
+---
+
+## 🛠️ Architecture & Tech Stack
+
+| Technology | Purpose |
+| :--- | :--- |
+| **HTML5 & Modern CSS** | Semantic layout, CSS backdrop filters, and radial glow atmospheres |
+| **Tailwind CSS** | Atomic responsive styling, flexbox grids, and typography scale |
+| **GSAP 3.12** | Core timeline animations, intro preloader sequence, and scroll reveals |
+| **ScrollTrigger** | Scroll-driven timeline scrubbing, parallax depth, and 3D rotation transforms |
+| **Lenis 1.1.18** | Smooth inertial momentum scrolling with RAF synchronization |
 
 ---
 
@@ -21,6 +76,12 @@ A high-performance, modern, and responsive digital studio landing page template 
 ├── index.html                   # Main landing page entry point
 ├── README.md                    # Project documentation
 ├── .gitignore                   # Git ignore rules
+├── docs/
+│   └── screenshots/             # High-resolution documentation previews
+│       ├── hero-showcase.png
+│       ├── services-grid.png
+│       ├── 3d-studio.png
+│       └── contact-section.png
 └── assets/
     ├── css/
     │   └── style.css            # Core stylesheets and utility classes
@@ -59,6 +120,17 @@ A high-performance, modern, and responsive digital studio landing page template 
 
 ---
 
-## 🚀 Quick Start
+## 🚀 How to Run
 
-Open `index.html` in any modern web browser or deploy directly to GitHub Pages, Netlify, or Vercel.
+1. **Option A (Instant)**: Double-click `index.html` to open it in your browser.
+2. **Option B (Recommended Local Server)**:
+   ```bash
+   python -m http.server 8000
+   ```
+   Then open `http://localhost:8000` in your web browser.
+
+---
+
+## 📄 License
+
+MIT License © 2026 [Sooraj Studio](https://github.com/soorajstudio)
