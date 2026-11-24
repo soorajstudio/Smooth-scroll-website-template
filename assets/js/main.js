@@ -515,16 +515,16 @@
         if (!navbar) return;
 
         function onScroll() {
-            if (window.scrollY > 50) {
-                navbar.classList.add('top-2', 'h-16', 'w-11/12', 'rounded-full', 'border', 'border-slate-700', 'bg-slate-900/50', 'backdrop-blur-sm');
-                navbar.classList.remove('top-0', 'h-20', 'w-full', 'border-none', 'bg-transparent');
+            if (window.scrollY > 30) {
+                navbar.classList.add('shadow-lg', 'bg-slate-900/80');
+                navbar.classList.remove('bg-slate-900/50');
             } else {
-                navbar.classList.remove('top-2', 'h-16', 'w-11/12', 'rounded-full', 'border', 'border-slate-700', 'bg-slate-900/50', 'backdrop-blur-sm');
-                navbar.classList.add('top-0', 'h-20', 'w-full', 'border-none', 'bg-transparent');
+                navbar.classList.remove('shadow-lg', 'bg-slate-900/80');
+                navbar.classList.add('bg-slate-900/50');
             }
         }
 
-        window.addEventListener('scroll', onScroll);
+        window.addEventListener('scroll', onScroll, { passive: true });
         onScroll();
 
         // In-page smooth scrolling for desktop navbar links
