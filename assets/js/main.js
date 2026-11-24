@@ -6,6 +6,8 @@
 (function () {
     'use strict';
 
+    var lenis = null;
+
     // Wait until DOM and libraries are fully loaded
     function init() {
         initLenis();
@@ -24,7 +26,6 @@
     // ----------------------------------------------------
     // 1. LENIS SMOOTH INERTIAL SCROLLING
     // ----------------------------------------------------
-    let lenis = null;
     function initLenis() {
         if (typeof Lenis === 'undefined') return;
 
@@ -40,22 +41,24 @@
                 infinite: false
             });
 
+            window.lenis = lenis;
+
             // Synchronize Lenis with GSAP ScrollTrigger
             if (typeof ScrollTrigger !== 'undefined') {
                 lenis.on('scroll', ScrollTrigger.update);
-                gsap.ticker.add((time) => {
-                    lenis.raf(time * 1000);
-                });
-                gsap.ticker.lagSmoothing(0);
-            } else {
-                function raf(time) {
-                    lenis.raf(time);
-                    requestAnimationFrame(raf);
-                }
+            }
+
+            function raf(time) {
+                lenis.raf(time);
                 requestAnimationFrame(raf);
             }
+            requestAnimationFrame(raf);
+
+            if (typeof gsap !== 'undefined') {
+                gsap.ticker.lagSmoothing(0);
+            }
         } catch (e) {
-            console.warn("Lenis initialization skipped:", e);
+            console.warn("Lenis initialization error:", e);
         }
     }
 
@@ -74,40 +77,58 @@
         const loaderTitle = document.querySelector('.loader-title');
         const growCircle = document.querySelector('.grow-circle');
 
+        function cleanupLoader() {
+            if (loader) {
+                loader.style.pointerEvents = 'none';
+                loader.style.display = 'none';
+                if (loader.parentNode) {
+                    loader.parentNode.removeChild(loader);
+                }
+            }
+            playHeroIntro();
+            if (typeof ScrollTrigger !== 'undefined') {
+                ScrollTrigger.refresh();
+            }
+        }
+
         if (loader && loaderTitle && growCircle) {
-            const preloaderTl = gsap.timeline();
+            loader.style.pointerEvents = 'none';
+            const safetyTimer = setTimeout(cleanupLoader, 2500);
+
+            const preloaderTl = gsap.timeline({
+                onComplete: function () {
+                    clearTimeout(safetyTimer);
+                    cleanupLoader();
+                }
+            });
 
             preloaderTl
                 .to(loaderTitle, {
-                    duration: 1.2,
+                    duration: 0.8,
                     opacity: 1,
                     y: 0,
                     filter: 'blur(0px)',
                     ease: 'power4.out',
-                    delay: 0.2
+                    delay: 0.1
                 })
                 .to(growCircle, {
-                    duration: 1.5,
+                    duration: 1.1,
                     scale: 6,
                     ease: 'power2.inOut'
-                }, '+=0.2')
+                }, '+=0.1')
                 .to(loaderTitle, {
-                    duration: 0.8,
+                    duration: 0.5,
                     opacity: 0,
                     y: -50,
                     filter: 'blur(10px)',
                     ease: 'power4.inOut'
                 }, '<')
                 .to(loader, {
-                    duration: 1.0,
+                    duration: 0.6,
                     opacity: 0,
                     filter: 'blur(12px)',
-                    ease: 'power4.inOut',
-                    onComplete: function () {
-                        loader.style.display = 'none';
-                        playHeroIntro();
-                    }
-                }, '-=0.5');
+                    ease: 'power4.inOut'
+                }, '-=0.3');
         } else {
             playHeroIntro();
         }
@@ -127,42 +148,42 @@
 
             heroTl
                 .to('#glow', {
-                    duration: 1.5,
+                    duration: 1.2,
                     opacity: 1,
                     ease: 'power4.inOut'
                 })
                 .to('#circle', {
-                    duration: 1.2,
+                    duration: 1.0,
                     opacity: 1,
                     scale: 1,
                     ease: 'back.out(1.4)'
                 }, '-=0.8')
                 .to('#title', {
-                    duration: 1.0,
+                    duration: 0.8,
                     opacity: 1,
                     y: 0,
                     ease: 'power3.out'
                 }, '-=0.6')
                 .to('#subtitle', {
-                    duration: 0.8,
+                    duration: 0.6,
                     opacity: 1,
                     x: 0,
                     ease: 'power3.out'
-                }, '-=0.6')
+                }, '-=0.5')
                 .to('#cta', {
-                    duration: 0.8,
+                    duration: 0.6,
                     opacity: 1,
                     x: 0,
                     ease: 'power3.out'
-                }, '-=0.6')
+                }, '-=0.5')
                 .to('#slider', {
-                    duration: 1.0,
+                    duration: 0.8,
                     opacity: 1,
                     y: 0,
                     ease: 'power3.out'
-                }, '-=0.5')
+                }, '-=0.4')
                 .to('#carousel', {
-                    duration: 1.0,
+                    duration: 0.8,
                     opacity: 1,
                     y: 0,
                     ease: 'power3.out',
@@ -171,7 +192,7 @@
                             ScrollTrigger.refresh();
                         }
                     }
-                }, '-=0.6');
+                }, '-=0.5');
         }
 
         if (typeof ScrollTrigger === 'undefined') return;
