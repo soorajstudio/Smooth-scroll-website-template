@@ -70,56 +70,6 @@ An ultra-modern, high-performance digital studio website template engineered wit
 
 ---
 
-## 📁 Project Structure
-
-```text
-├── index.html                   # Main landing page entry point
-├── README.md                    # Project documentation
-├── .gitignore                   # Git ignore rules
-├── docs/
-│   └── screenshots/             # High-resolution documentation previews
-│       ├── hero-showcase.png
-│       ├── services-grid.png
-│       ├── 3d-studio.png
-│       └── contact-section.png
-└── assets/
-    ├── css/
-    │   └── style.css            # Core stylesheets and utility classes
-    ├── js/
-    │   ├── gsap.min.js          # GSAP animation engine fallback
-    │   ├── lenis.min.js         # Lenis smooth scroll fallback
-    │   └── main.js              # Interactive controller (GSAP, Lenis, slider, navbar, contact)
-    └── images/
-        ├── logo/                # Brand logo & favicon
-        │   └── logo.png
-        ├── backgrounds/         # Gradient overlays & glow SVGs
-        │   └── bg-gradient.svg
-        ├── comparison/          # High-resolution comparison slider images
-        │   ├── original.webp
-        │   └── upscaled.webp
-        ├── features/            # Feature graphics & 3D dashboard preview
-        │   ├── cloud-screenshot.webp
-        │   ├── desktop-app.png
-        │   ├── headache.webp
-        │   ├── ring.png
-        │   └── upscaling.webp
-        └── partners/            # Partner & press logos
-            ├── beebom.png
-            ├── digitaltrends.png
-            ├── geekworkers.png
-            ├── gigazine.png
-            ├── howtogeek.png
-            ├── itsfossnews.png
-            ├── linuxuprising.png
-            ├── makeuseof.png
-            ├── medium.png
-            ├── nerdschalk.png
-            ├── reddit.png
-            └── ycombinator.png
-```
-
----
-
 ## 🚀 How to Run
 
 1. **Option A (Instant)**: Double-click `index.html` to open it in your browser.
