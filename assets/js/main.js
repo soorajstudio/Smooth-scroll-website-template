@@ -588,24 +588,6 @@
     // 7. CONTACT FORM INTERACTIVITY
     // ----------------------------------------------------
     function initContactForm() {
-        const pills = document.querySelectorAll('.service-pill');
-        const selectedServices = new Set();
-
-        pills.forEach((pill) => {
-            pill.addEventListener('click', () => {
-                const service = pill.getAttribute('data-service');
-                if (selectedServices.has(service)) {
-                    selectedServices.delete(service);
-                    pill.classList.remove('border-indigo-400', 'bg-indigo-600/30', 'text-white', 'shadow-[0_0_15px_rgba(99,102,241,0.3)]');
-                    pill.classList.add('border-slate-700', 'bg-slate-800/50', 'text-slate-300');
-                } else {
-                    selectedServices.add(service);
-                    pill.classList.add('border-indigo-400', 'bg-indigo-600/30', 'text-white', 'shadow-[0_0_15px_rgba(99,102,241,0.3)]');
-                    pill.classList.remove('border-slate-700', 'bg-slate-800/50', 'text-slate-300');
-                }
-            });
-        });
-
         const form = document.querySelector('#aiyooo-contact-form');
         const successMsg = document.querySelector('#contact-success');
         const submitBtn = document.querySelector('#contact-submit-btn');
@@ -634,11 +616,6 @@
                         successMsg.classList.remove('hidden');
                     }
                     form.reset();
-                    selectedServices.clear();
-                    pills.forEach((p) => {
-                        p.classList.remove('border-indigo-400', 'bg-indigo-600/30', 'text-white', 'shadow-[0_0_15px_rgba(99,102,241,0.3)]');
-                        p.classList.add('border-slate-700', 'bg-slate-800/50', 'text-slate-300');
-                    });
                 }, 800);
             });
         }
