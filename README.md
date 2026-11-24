@@ -1,75 +1,64 @@
-# Smooth Website Template - Upscayl
+# Aiyooo - Next-Gen Digital Studio & AI Powerhouse
 
-A sleek, modern, and fully responsive AI-themed website landing page template.
+A high-performance, modern, and responsive digital studio landing page template powered by **GSAP**, **ScrollTrigger**, and **Lenis** smooth inertial scrolling.
 
 ## ✨ Features
 
-- **Interactive Before / After Image Comparison Slider**: Drag-to-compare with pointer, mouse, touch, and keyboard accessibility (Left / Right arrow keys).
-- **Infinite Media Logo Marquee**: Continuously scrolling "AS SEEN ON" partner logos banner with hover-pause.
-- **Dynamic Text Rotator**: Smoothly cycling value proposition titles in the "Made for" section.
-- **Responsive Navigation**: Desktop floating pill navbar with dynamic scroll shrink/blur and a mobile slide-out drawer menu.
-- **Feature Showcase**: Cloud & Desktop showcase sections with visual previews and feature grids.
-- **Dark Modern Aesthetic**: Tailored with Tailwind CSS, backdrop blurs, and radial gradients.
-- **Clean Standalone Code**: Pure HTML, modern CSS, and modular vanilla JavaScript with zero external runtime dependencies.
+- **Lenis Smooth Inertial Scrolling**: Buttery-smooth normalized scrolling synchronized with GSAP ScrollTrigger.
+- **Interactive Before / After Image Comparison Slider**: Drag-to-compare with pointer, mouse, touch, and keyboard accessibility.
+- **GSAP 3D Scroll Perspective Animations**: Dynamic 3D container tilt, parallax elevation, and scrub transitions.
+- **Dual Animated Running Text Marquees**: Full-width uppercase running marquee dividers with bullet spacers and scrub effects.
+- **Media Partner Logo Marquee**: Infinite horizontally scrolling partner logos banner.
+- **Modern Midnight Indigo Glassmorphic Contact Section**: Fully styled responsive contact form with glowing indigo borders, form validation, and feedback state.
+- **Floating Pill Navigation**: Centered navigation menu with rounded pill styling that adapts on scroll, plus a responsive mobile drawer menu.
+- **Dark Modern Cyber Aesthetic**: Built with Tailwind CSS, backdrop blurs, and radial gradients.
 
 ---
 
 ## 📁 Project Structure
 
 ```text
-├── index.html                   # Main template HTML entry point
+├── index.html                   # Main landing page entry point
 ├── README.md                    # Project documentation
 ├── .gitignore                   # Git ignore rules
 └── assets/
     ├── css/
     │   └── style.css            # Core stylesheets and utility classes
     ├── js/
-    │   └── main.js              # Modular client controller (slider, rotator, mobile menu, scroll)
+    │   ├── gsap.min.js          # GSAP animation engine fallback
+    │   ├── lenis.min.js         # Lenis smooth scroll fallback
+    │   └── main.js              # Interactive controller (GSAP, Lenis, slider, navbar, contact)
     └── images/
-        ├── logo/                # Logo and favicon
+        ├── logo/                # Brand logo & favicon
         │   └── logo.png
-        ├── backgrounds/         # Gradient overlays and background SVGs
+        ├── backgrounds/         # Gradient overlays & glow SVGs
         │   └── bg-gradient.svg
-        ├── comparison/          # High-resolution comparison slider before/after images
+        ├── comparison/          # High-resolution comparison slider images
         │   ├── original.webp
         │   └── upscaled.webp
-        ├── partners/            # Partner & press logos
-        │   ├── beebom.png
-        │   ├── digitaltrends.png
-        │   ├── geekworkers.png
-        │   ├── gigazine.png
-        │   ├── howtogeek.png
-        │   ├── itsfossnews.png
-        │   ├── linuxuprising.png
-        │   ├── makeuseof.png
-        │   ├── medium.png
-        │   ├── nerdschalk.png
-        │   ├── reddit.png
-        │   └── ycombinator.png
-        ├── features/            # Section screenshots and illustration graphics
+        ├── features/            # Feature graphics & 3D dashboard preview
         │   ├── cloud-screenshot.webp
-        │   ├── color-accuracy.webp
         │   ├── desktop-app.png
-        │   ├── desktop-screenshot.webp
         │   ├── headache.webp
         │   ├── ring.png
-        │   ├── universal-compatibility.webp
-        │   ├── unlimited-storage.webp
         │   └── upscaling.webp
-        └── avatars/             # User testimonials profile pictures
-            ├── ai_artinfocus.jpg
-            ├── fw.jpg
-            ├── gregberge.png
-            ├── hard_coded_xyz.jpg
-            ├── isobelh_art.jpg
-            ├── itsyopahadiboy.jpg
-            ├── jacoblaren.jpg
-            ├── nolimitlearn.jpg
-            └── the_einarkist.jpg
+        └── partners/            # Partner & press logos
+            ├── beebom.png
+            ├── digitaltrends.png
+            ├── geekworkers.png
+            ├── gigazine.png
+            ├── howtogeek.png
+            ├── itsfossnews.png
+            ├── linuxuprising.png
+            ├── makeuseof.png
+            ├── medium.png
+            ├── nerdschalk.png
+            ├── reddit.png
+            └── ycombinator.png
 ```
 
 ---
 
 ## 🚀 Quick Start
 
-Simply open `index.html` in any web browser or deploy directly to GitHub Pages, Netlify, or Vercel.
+Open `index.html` in any modern web browser or deploy directly to GitHub Pages, Netlify, or Vercel.
