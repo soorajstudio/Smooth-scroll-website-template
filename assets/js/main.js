@@ -294,58 +294,7 @@
             });
         }
 
-        // --- E. "MADE FOR" PINNED SCRUB ANIMATION ---
-        const madeForSection = document.getElementById('made-for-section');
-        const textContainer = document.getElementById('text-container');
-        const words = gsap.utils.toArray('.made-word');
-
-        if (madeForSection && textContainer && words.length > 0) {
-            // Pinned scroll section
-            ScrollTrigger.create({
-                trigger: madeForSection,
-                start: 'top top',
-                end: 'bottom bottom',
-                pin: textContainer,
-                pinSpacing: false
-            });
-
-            // Master timeline scrubbed across section scroll
-            const wordsTl = gsap.timeline({
-                scrollTrigger: {
-                    trigger: madeForSection,
-                    start: 'top top',
-                    end: 'bottom bottom',
-                    scrub: 1
-                }
-            });
-
-            words.forEach((word, index) => {
-                // Initial state
-                gsap.set(word, { opacity: index === 0 ? 1 : 0, y: index === 0 ? 0 : 60 });
-
-                if (index > 0) {
-                    wordsTl.to(word, {
-                        opacity: 1,
-                        y: 0,
-                        duration: 1,
-                        ease: 'power2.out'
-                    });
-                }
-
-                wordsTl.to(word, { duration: 1.5 }); // Hold
-
-                if (index < words.length - 1) {
-                    wordsTl.to(word, {
-                        opacity: 0,
-                        y: -60,
-                        duration: 1,
-                        ease: 'power2.in'
-                    });
-                }
-            });
-        }
-
-        // --- F. CLOUD 3D CONTAINER SCROLL ANIMATION ---
+        // --- E. CLOUD 3D CONTAINER SCROLL ANIMATION ---
         const cloudContainer = document.getElementById('cloud-container');
         const cloudCard = document.getElementById('cloud-card-wrapper');
         const cloudTitle = document.getElementById('cloud-title-container');
@@ -419,7 +368,7 @@
             });
         }
 
-        // --- G. DESKTOP SECTION SCROLL REVEAL ---
+        // --- F. DESKTOP SECTION SCROLL REVEAL ---
         const desktopSection = document.getElementById('upscayl-desktop-section');
         if (desktopSection) {
             gsap.from('#upscayl-desktop-section #heading h1, #upscayl-desktop-section #subheading p', {
@@ -447,7 +396,7 @@
             });
         }
 
-        // --- H. RUNNING TEXT DIVIDER SCRUB ---
+        // --- G. RUNNING TEXT DIVIDER SCRUB ---
         const runningTracks = gsap.utils.toArray('.running-text');
         runningTracks.forEach((track) => {
             gsap.to(track, {
@@ -461,7 +410,7 @@
             });
         });
 
-        // --- I. BOTTOM CTA SECTION STAGGER REVEAL ---
+        // --- H. BOTTOM CTA SECTION STAGGER REVEAL ---
         const bottomCta = document.querySelector('.bottom-cta-container') || document.getElementById('text-1')?.closest('div');
         if (bottomCta) {
             gsap.from('#text-1, #text-2, #text-3, #button', {
