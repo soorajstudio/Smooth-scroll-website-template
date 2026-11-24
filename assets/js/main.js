@@ -15,6 +15,7 @@
         initMobileMenu();
         initNavbarScroll();
         initAnimations();
+        initContactForm();
     }
 
     if (document.readyState === 'loading') {
@@ -366,6 +367,36 @@
             });
         });
 
+        // --- G. CONTACT SECTION SCROLL REVEAL ---
+        const contactHeader = document.querySelector('#contact-header');
+        const contactCard = document.querySelector('#contact-card');
+        if (contactHeader && contactCard) {
+            gsap.from(contactHeader, {
+                scrollTrigger: {
+                    trigger: '#contact',
+                    start: 'top 85%',
+                    toggleActions: 'play none none none'
+                },
+                y: 40,
+                opacity: 0,
+                duration: 0.9,
+                ease: 'power3.out'
+            });
+
+            gsap.from(contactCard, {
+                scrollTrigger: {
+                    trigger: contactCard,
+                    start: 'top 85%',
+                    toggleActions: 'play none none none'
+                },
+                y: 50,
+                opacity: 0,
+                duration: 1,
+                ease: 'power3.out',
+                delay: 0.15
+            });
+        }
+
         // Refresh triggers on resize
         window.addEventListener('resize', () => {
             ScrollTrigger.refresh();
@@ -527,8 +558,8 @@
         window.addEventListener('scroll', onScroll, { passive: true });
         onScroll();
 
-        // In-page smooth scrolling for desktop navbar links
-        document.querySelectorAll('#navbar a[href^="#"]').forEach((anchor) => {
+        // In-page smooth scrolling for all internal anchor links (navbar, CTA, etc.)
+        document.querySelectorAll('#navbar a[href^="#"], #cta a[href^="#"], .mobile-nav-link[href^="#"]').forEach((anchor) => {
             anchor.addEventListener('click', function (e) {
                 const targetId = this.getAttribute('href');
                 if (targetId && targetId !== '#') {
@@ -551,5 +582,65 @@
                 }
             });
         });
+    }
+
+    // ----------------------------------------------------
+    // 7. CONTACT FORM INTERACTIVITY
+    // ----------------------------------------------------
+    function initContactForm() {
+        const pills = document.querySelectorAll('.service-pill');
+        const selectedServices = new Set();
+
+        pills.forEach((pill) => {
+            pill.addEventListener('click', () => {
+                const service = pill.getAttribute('data-service');
+                if (selectedServices.has(service)) {
+                    selectedServices.delete(service);
+                    pill.classList.remove('border-indigo-400', 'bg-indigo-600/30', 'text-white', 'shadow-[0_0_15px_rgba(99,102,241,0.3)]');
+                    pill.classList.add('border-slate-700', 'bg-slate-800/50', 'text-slate-300');
+                } else {
+                    selectedServices.add(service);
+                    pill.classList.add('border-indigo-400', 'bg-indigo-600/30', 'text-white', 'shadow-[0_0_15px_rgba(99,102,241,0.3)]');
+                    pill.classList.remove('border-slate-700', 'bg-slate-800/50', 'text-slate-300');
+                }
+            });
+        });
+
+        const form = document.querySelector('#aiyooo-contact-form');
+        const successMsg = document.querySelector('#contact-success');
+        const submitBtn = document.querySelector('#contact-submit-btn');
+
+        if (form) {
+            form.addEventListener('submit', (e) => {
+                e.preventDefault();
+                
+                if (submitBtn) {
+                    submitBtn.disabled = true;
+                    submitBtn.classList.add('opacity-75');
+                    submitBtn.innerHTML = '<span>Sending...</span>';
+                }
+
+                setTimeout(() => {
+                    if (submitBtn) {
+                        submitBtn.disabled = false;
+                        submitBtn.classList.remove('opacity-75');
+                        submitBtn.innerHTML = `
+                            <span class="relative z-10 flex items-center gap-2">
+                                <span>Brief Sent! ✨</span>
+                            </span>
+                        `;
+                    }
+                    if (successMsg) {
+                        successMsg.classList.remove('hidden');
+                    }
+                    form.reset();
+                    selectedServices.clear();
+                    pills.forEach((p) => {
+                        p.classList.remove('border-indigo-400', 'bg-indigo-600/30', 'text-white', 'shadow-[0_0_15px_rgba(99,102,241,0.3)]');
+                        p.classList.add('border-slate-700', 'bg-slate-800/50', 'text-slate-300');
+                    });
+                }, 800);
+            });
+        }
     }
 })();
