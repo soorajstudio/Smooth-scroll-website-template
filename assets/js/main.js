@@ -366,22 +366,6 @@
             });
         });
 
-        // --- G. BOTTOM CTA SECTION STAGGER REVEAL ---
-        const bottomCta = document.querySelector('.bottom-cta-container') || document.getElementById('text-1')?.closest('div');
-        if (bottomCta) {
-            gsap.from('#text-1, #text-2, #text-3, #button', {
-                scrollTrigger: {
-                    trigger: bottomCta,
-                    start: 'top 85%',
-                    end: 'bottom 75%',
-                    scrub: 1.1
-                },
-                stagger: 0.2,
-                opacity: 0,
-                y: '60px'
-            });
-        }
-
         // Refresh triggers on resize
         window.addEventListener('resize', () => {
             ScrollTrigger.refresh();
