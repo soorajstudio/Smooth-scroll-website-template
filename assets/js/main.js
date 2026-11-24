@@ -352,22 +352,6 @@
             });
         }
 
-        // Cloud Features Grid Scroll Reveal
-        const cloudFeatures = document.getElementById('cloud-features-grid');
-        if (cloudFeatures) {
-            gsap.from('#cloud-features-grid > div', {
-                scrollTrigger: {
-                    trigger: cloudFeatures,
-                    start: 'top 85%',
-                    end: 'top 50%',
-                    scrub: 1
-                },
-                stagger: 0.1,
-                opacity: 0,
-                y: 50
-            });
-        }
-
         // --- F. DESKTOP SECTION SCROLL REVEAL ---
         const desktopSection = document.getElementById('upscayl-desktop-section');
         if (desktopSection) {
