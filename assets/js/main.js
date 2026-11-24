@@ -352,35 +352,7 @@
             });
         }
 
-        // --- F. DESKTOP SECTION SCROLL REVEAL ---
-        const desktopSection = document.getElementById('upscayl-desktop-section');
-        if (desktopSection) {
-            gsap.from('#upscayl-desktop-section #heading h1, #upscayl-desktop-section #subheading p', {
-                scrollTrigger: {
-                    trigger: desktopSection,
-                    start: 'top 80%',
-                    end: 'top+=250 center',
-                    scrub: 1.1
-                },
-                stagger: 0.2,
-                opacity: 0,
-                y: '80px'
-            });
-
-            gsap.from('#showcase-image', {
-                scrollTrigger: {
-                    trigger: desktopSection,
-                    start: 'top 70%',
-                    end: 'top+=500 center',
-                    scrub: 1.1
-                },
-                scale: 0.9,
-                opacity: 0,
-                y: '100px'
-            });
-        }
-
-        // --- G. RUNNING TEXT DIVIDER SCRUB ---
+        // --- F. RUNNING TEXT DIVIDER SCRUB ---
         const runningTracks = gsap.utils.toArray('.running-text');
         runningTracks.forEach((track) => {
             gsap.to(track, {
@@ -394,7 +366,7 @@
             });
         });
 
-        // --- H. BOTTOM CTA SECTION STAGGER REVEAL ---
+        // --- G. BOTTOM CTA SECTION STAGGER REVEAL ---
         const bottomCta = document.querySelector('.bottom-cta-container') || document.getElementById('text-1')?.closest('div');
         if (bottomCta) {
             gsap.from('#text-1, #text-2, #text-3, #button', {
